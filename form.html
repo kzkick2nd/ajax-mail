@@ -3,8 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <title>ajax-mail</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
 </head>
 <body>
 
+<h3>ajax-mail</h3>
+<form id="ajax-mail">
+  <input type="email" name="email">
+  <br>
+  <textarea name="body"></textarea>
+  <br>
+  <input type="submit" id="submit" value="送信">
+</form>
+<div id="response"></div>
+
+<script>
+$(function(){
+  $('#ajax-mail').on('submit', function(){
+    var formData = new FormData( $("#ajax-mail").get()[0] );
+    $.ajax({
+      type: "post",
+      url: "ajax-mail.php",
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false,
+    }).done(function(response) {
+      $("#response").html(response);
+    }).fail(function(XMLHttpRequest, textStatus, errorThrown){
+      console.log(textStatus);
+    });
+    return false;
+  });
+});
+</script>
 </body>
 </html>
