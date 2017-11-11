@@ -17,7 +17,7 @@
   <br>
   <input type="submit" value="send">
 </form>
-<div id="response"></div>
+<div id="ajax-mail-status"></div>
 
 <script>
   window.onload = function() {
@@ -26,12 +26,18 @@
       axios.post('ajax-mail.php', formData)
         .then(function (response) {
           console.log(response);
+          updateStatus(response.data);
         })
         .catch(function (error) {
           console.log(error);
+          updateStatus(error.data);
         });
     }
+    function updateStatus(text){
+      mailStatus.textContent = text;
+    }
     var mailForm = document.getElementById('ajax-mail');
+    var mailStatus = document.getElementById('ajax-mail-status');
     mailForm.addEventListener("submit", function (event) {
       event.preventDefault();
       sendAjaxMail();
