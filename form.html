@@ -3,39 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <title>ajax-mail</title>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
 <h3>ajax-mail</h3>
 <form id="ajax-mail">
+  <label for="email">email</label><br>
   <input type="email" name="email">
   <br>
+  <label for="body">body</label><br>
   <textarea name="body"></textarea>
   <br>
-  <input type="submit" value="送信">
+  <input type="submit" value="send">
 </form>
 <div id="response"></div>
 
 <script>
-$(function(){
-  $('#ajax-mail').on('submit', function(){
-    var formData = new FormData( $("#ajax-mail").get()[0] );
-    $.ajax({
-      type: "post",
-      url: "ajax-mail.php",
-      dataType: 'json',
-      data: formData,
-      processData: false,
-      contentType: false,
-    }).done(function(response) {
-      $("#response").html(response);
-    }).fail(function(XMLHttpRequest, textStatus, errorThrown){
-      console.log(textStatus);
+  window.onload = function() {
+    function sendAjaxMail(){
+      var formData = new FormData(mailForm);
+      axios.post('ajax-mail.php', formData)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    var mailForm = document.getElementById('ajax-mail');
+    mailForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      sendAjaxMail();
     });
-    return false;
-  });
-});
+  }
 </script>
 </body>
 </html>
