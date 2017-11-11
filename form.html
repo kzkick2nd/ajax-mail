@@ -30,7 +30,7 @@
         })
         .catch(function (error) {
           console.log(error);
-          updateStatus(error.data);
+          updateStatus(error.response.data);
         });
     }
     function updateStatus(text){
