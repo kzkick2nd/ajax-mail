@@ -23,7 +23,7 @@
   window.onload = function() {
     function sendAjaxMail(){
       var formData = new FormData(mailForm);
-      axios.post('ajax-mail.php', formData)
+      axios.post('ajax-mail.php', formData, {headers: {'X-Requested-With': 'XMLHttpRequest'},})
         .then(function (response) {
           console.log(response);
           updateStatus(response.data);
